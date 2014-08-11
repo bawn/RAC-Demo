@@ -8,7 +8,6 @@
 
 #import "TestViewController.h"
 #import <ReactiveCocoa.h>
-static NSDateFormatter *dateFormatter;
 static NSInteger numberLimit = 5;
 
 @interface TestViewController ()<UITextFieldDelegate, UIPickerViewDelegate>
@@ -33,15 +32,12 @@ static NSInteger numberLimit = 5;
 {
     [super viewDidLoad];
     
-    dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:[NSString stringWithFormat:@"HH:mm:ss"]];
-    
     __block NSInteger number = numberLimit;
     self.timeButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     
-    
     @weakify(self);
-    RACSignal *buttonSignal = [[[[[RACSignal interval:1.0f onScheduler:[RACScheduler mainThreadScheduler]] take:numberLimit] startWith:@(numberLimit)] map:^id(NSDate *date) {
+    RACSignal *timeSignal = [[[[[RACSignal interval:1.0f onScheduler:[RACScheduler mainThreadScheduler]] take:numberLimit] startWith:@(1)] map:^id(NSDate *date) {
+        NSLog(@"%@", date);
         @strongify(self);
         if (number == 0) {
             [self.timeButton setTitle:@"重新发送" forState:UIControlStateNormal];
@@ -54,13 +50,12 @@ static NSInteger numberLimit = 5;
         }
     }] takeUntil:self.rac_willDeallocSignal];
     
-    self.timeButton.rac_command = [[RACCommand alloc]initWithEnabled:buttonSignal signalBlock:^RACSignal *(id input) {
+    self.timeButton.rac_command = [[RACCommand alloc]initWithEnabled:timeSignal signalBlock:^RACSignal *(id input) {
         number = numberLimit;
-        return buttonSignal;
+        return timeSignal;
     }];
     [self.timeButton setTitle:[@(numberLimit) stringValue] forState:UIControlStateNormal];
     
-   
 }
 
 
