@@ -8,10 +8,10 @@
 
 #import "RACDelegateViewController.h"
 
+
 @interface RACDelegateViewController ()
-@property (nonatomic, strong) IBOutlet UIButton *button;
 
-
+@property (nonatomic, strong) NSArray *array;
 @end
 
 @implementation RACDelegateViewController
@@ -20,7 +20,11 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        @weakify(self);
+        self.delegateSignal = [[self rac_signalForSelector:@selector(dismiss:)] then:^RACSignal *{
+            @strongify(self);
+            return [RACSignal return:self.array];
+        }];
         
     }
     return self;
@@ -28,14 +32,17 @@
 
 - (void)awakeFromNib{
     [super awakeFromNib];
-    self.delegateSignal = [self rac_signalForSelector:@selector(dismiss:)];
-    
-    
+    @weakify(self);
+    self.delegateSignal = [[self rac_signalForSelector:@selector(dismiss:)] map:^id(id value) {
+        @strongify(self);
+        return self.array;
+    }];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.array = @[@1, @2, @3];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,7 +55,6 @@
 - (IBAction)dismiss:(id)sender{
     
     [self dismissViewControllerAnimated:YES completion:NULL];
-    
 }
 
 

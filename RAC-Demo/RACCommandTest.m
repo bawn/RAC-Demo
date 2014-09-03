@@ -55,7 +55,7 @@
     
     self.refreshButton.rac_command = [[RACCommand alloc]initWithSignalBlock:^RACSignal *(id input) {
         @strongify(self);
-        return [self weather:_currentLocation];
+        return [self weather:self.currentLocation];
     }];
     
 //    [self.refreshButton.rac_command.enabled subscribeNext:^(id x) {

@@ -11,8 +11,6 @@
 
 @interface TableViewController ()
 
-@property (nonatomic, strong) NSMutableArray *array;
-
 
 @end
 
@@ -42,9 +40,7 @@
 
 #pragma mark - Table view data source
 
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    
     if ([segue.destinationViewController isKindOfClass:[UINavigationController class]]) {
         UINavigationController *nav = (UINavigationController *)segue.destinationViewController;
         RACDelegateViewController *delegateVC = (RACDelegateViewController *)nav.topViewController;
