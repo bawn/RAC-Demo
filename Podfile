@@ -1,3 +1,5 @@
-pod "AFNetworking", "~> 2.0"
-pod 'ReactiveCocoa', '~> 2.3.1'
-pod 'KKGestureLockView', :podspec => 'https://github.com/bawn/KKGestureLockView/KKGestureLockView.podspec'
+
+platform :ios, '7.0'
+
+pod 'AFNetworking'
+pod 'ReactiveCocoa'

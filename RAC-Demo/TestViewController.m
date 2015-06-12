@@ -8,12 +8,15 @@
 
 #import "TestViewController.h"
 #import <ReactiveCocoa.h>
-static NSInteger numberLimit = 5;
 
-@interface TestViewController ()<UITextFieldDelegate, UIPickerViewDelegate>
+static NSInteger numberLimit1 = 5;
 
-@property (nonatomic, strong) IBOutlet UIButton *timeButton;
+static NSInteger numberLimit2 = 5;
 
+@interface TestViewController ()
+
+@property (nonatomic, strong) IBOutlet UIButton *timeButton1;
+@property (nonatomic, strong) IBOutlet UIButton *timeButton2;
 
 @end
 
@@ -32,32 +35,58 @@ static NSInteger numberLimit = 5;
 {
     [super viewDidLoad];
     
-    __block NSInteger number = numberLimit;
-    self.timeButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    // 立即开启倒计时
     
+    __block NSInteger number1 = numberLimit1;
+    self.timeButton1.titleLabel.textAlignment = NSTextAlignmentCenter;
+
     @weakify(self);
-    RACSignal *timeSignal = [[[[[RACSignal interval:1.0f onScheduler:[RACScheduler mainThreadScheduler]] take:numberLimit] startWith:@(1)] map:^id(NSDate *date) {
+    RACSignal *timeSignal1 = [[[[[RACSignal interval:1.0f onScheduler:[RACScheduler mainThreadScheduler]] take:numberLimit1] startWith:@(1)] map:^id(NSDate *date) {
         NSLog(@"%@", date);
         @strongify(self);
-        if (number == 0) {
-            [self.timeButton setTitle:@"重新发送" forState:UIControlStateNormal];
+        if (number1 == 0) {
+            [self.timeButton1 setTitle:@"重新发送" forState:UIControlStateNormal];
             return @YES;
         }
         else{
             
-            self.timeButton.titleLabel.text = [NSString stringWithFormat:@"%d", number--];
+            self.timeButton1.titleLabel.text = [NSString stringWithFormat:@"%d", number1--];
             return @NO;
         }
     }] takeUntil:self.rac_willDeallocSignal];
     
-    self.timeButton.rac_command = [[RACCommand alloc]initWithEnabled:timeSignal signalBlock:^RACSignal *(id input) {
-        number = numberLimit;
-        return timeSignal;
+    self.timeButton1.rac_command = [[RACCommand alloc]initWithEnabled:timeSignal1 signalBlock:^RACSignal *(id input) {
+        number1 = numberLimit1;
+        return timeSignal1;
     }];
-    [self.timeButton setTitle:[@(numberLimit) stringValue] forState:UIControlStateNormal];
+    [self.timeButton1 setTitle:[@(numberLimit1) stringValue] forState:UIControlStateNormal];
     
 
     
+    
+    // 点击开始倒计时
+    self.timeButton2.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.timeButton2 setTitle:@"点击发送" forState:UIControlStateNormal];
+    __block NSInteger number2 = numberLimit2;
+    
+    RACSignal *timeSignal2 = [[[[[RACSignal interval:1.0f onScheduler:[RACScheduler mainThreadScheduler]] take:numberLimit2] startWith:@(1)] doNext:^(NSDate *date) {
+        @strongify(self);
+        NSLog(@"%@", date);
+        if (number2 == 0) {
+           [self.timeButton2 setTitle:@"重新发送" forState:UIControlStateNormal];
+            self.timeButton2.enabled = YES;
+        }
+        else{
+            self.timeButton2.titleLabel.text = [NSString stringWithFormat:@"%d", number2--];
+            self.timeButton2.enabled = NO;// 倒计时期间不可点击
+        }
+    }]takeUntil:self.rac_willDeallocSignal];
+
+    self.timeButton2.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        number2 = numberLimit2;
+        return timeSignal2;
+    }];
+
 }
 
 

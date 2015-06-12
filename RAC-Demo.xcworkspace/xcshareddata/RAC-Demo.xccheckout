@@ -10,29 +10,29 @@
 	<string>RAC-Demo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>1DA378F5-71BD-4582-B8E1-541B307CC6AF</key>
+		<key>AFF4A5FBB2F1D5AD1EB334EB3D9ADE22CB87B735</key>
 		<string>https://github.com/bawn/RAC-Demo</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>RAC-Demo.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>1DA378F5-71BD-4582-B8E1-541B307CC6AF</key>
+		<key>AFF4A5FBB2F1D5AD1EB334EB3D9ADE22CB87B735</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/bawn/RAC-Demo</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>1DA378F5-71BD-4582-B8E1-541B307CC6AF</string>
+	<string>AFF4A5FBB2F1D5AD1EB334EB3D9ADE22CB87B735</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>1DA378F5-71BD-4582-B8E1-541B307CC6AF</string>
+			<string>AFF4A5FBB2F1D5AD1EB334EB3D9ADE22CB87B735</string>
 			<key>IDESourceControlWCCName</key>
 			<string>RAC-Demo</string>
 		</dict>
