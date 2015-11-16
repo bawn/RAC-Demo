@@ -50,7 +50,9 @@ static NSInteger numberLimit2 = 5;
         }
         else{
             
-            self.timeButton1.titleLabel.text = [NSString stringWithFormat:@"%d", number1--];
+//            self.timeButton1.titleLabel.text = [NSString stringWithFormat:@"%d", number1--];
+#warning modify button title
+            [self.timeButton1 setTitle:[NSString stringWithFormat:@"%ld", (long)number1--] forState:UIControlStateDisabled];
             return @NO;
         }
     }] takeUntil:self.rac_willDeallocSignal];
@@ -77,7 +79,9 @@ static NSInteger numberLimit2 = 5;
             self.timeButton2.enabled = YES;
         }
         else{
-            self.timeButton2.titleLabel.text = [NSString stringWithFormat:@"%d", number2--];
+#warning modify button title
+//            self.timeButton2.titleLabel.text = [NSString stringWithFormat:@"%d", number2--];
+            [self.timeButton2 setTitle:[NSString stringWithFormat:@"%ld", (long)number2--] forState:UIControlStateDisabled];
             self.timeButton2.enabled = NO;// 倒计时期间不可点击
         }
     }]takeUntil:self.rac_willDeallocSignal];
